@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "BluetoothSerial.h"
 
 /*
 #ifndef __LREMOTE_H__
@@ -13,6 +14,15 @@
 #include "hexapod/hexapod.h"
 
 #define REACT_DELAY hexapod::config::movementInterval
+#define STANDBY_DELAY_CNT 50
+
+auto mode = hexapod::MOVEMENT_STANDBY;
+
+BluetoothSerial SerialBT;
+char cmd = '\0';
+long int no_signal_cnt = 0;
+
+
 
 /*
 static Button buttonForward(hexapod::MOVEMENT_FORWARD, "Forward", 1, 3, 1, 1, RC_BLUE);
@@ -38,6 +48,7 @@ static void log_output(const char* log) {
 }
 
 void normal_setup(void) {
+  SerialBT.begin("ESP32");
   /*
   LRemote.setName("Hexapod");
   LRemote.setOrientation(RC_PORTRAIT);
@@ -65,9 +76,39 @@ void normal_setup(void) {
 }
 
 void normal_loop(void) {
+
+  if (SerialBT.available()) {
+    no_signal_cnt = 0;
+
+    cmd = SerialBT.read(); // character
+    char tmp = SerialBT.read(); // \n
+
+    if      (cmd == 'k') mode = hexapod::MOVEMENT_FORWARD;
+    else if (cmd == 'i') mode = hexapod::MOVEMENT_FORWARDFAST;
+    else if (cmd == 'm') mode = hexapod::MOVEMENT_BACKWARD;
+    else if (cmd == 'l') mode = hexapod::MOVEMENT_TURNLEFT;
+    else if (cmd == 'j') mode = hexapod::MOVEMENT_TURNRIGHT;
+    else if (cmd == 'o') mode = hexapod::MOVEMENT_SHIFTLEFT;
+    else if (cmd == 'u') mode = hexapod::MOVEMENT_SHIFTRIGHT;
+    else if (cmd == '8') mode = hexapod::MOVEMENT_CLIMB;
+  }
+
+  else {
+    no_signal_cnt++;
+
+    if (no_signal_cnt >= STANDBY_DELAY_CNT) {
+      mode = hexapod::MOVEMENT_STANDBY;
+      no_signal_cnt = 0;
+    }
+  }
+
+  hexapod::Hexapod.processMovement(mode, REACT_DELAY);
+
+
+
   /*
 
-  // check if we are connect by some 
+  // check if we are connect by some
   // BLE central device, e.g. an mobile app
   if(!LRemote.connected()) {
     delay(1000-REACT_DELAY);
@@ -77,7 +118,7 @@ void normal_loop(void) {
 
   // Process the incoming BLE write request
   // and translate them to control events
-  LRemote.process();  
+  LRemote.process();
 
   auto flag = btnGroup.getPressFlag();
   auto mode = hexapod::MOVEMENT_STANDBY;
