@@ -1,17 +1,20 @@
 #include <Arduino.h>
 
+/*
 #ifndef __LREMOTE_H__
 #include <LRemote.h>
 #define __LREMOTE_H__
 #endif
+*/
 
-#include "linkit_control/ui_controls.h"
+//#include "linkit_control/ui_controls.h"
 #include "hexapod/debug.h"
 #include "hexapod/config.h"
 #include "hexapod/hexapod.h"
 
 #define REACT_DELAY hexapod::config::movementInterval
 
+/*
 static Button buttonForward(hexapod::MOVEMENT_FORWARD, "Forward", 1, 3, 1, 1, RC_BLUE);
 static Button buttonRun(hexapod::MOVEMENT_FORWARDFAST, "Run", 1, 2, 1, 1, RC_ORANGE);
 static Button buttonBackward(hexapod::MOVEMENT_BACKWARD, "Backward", 1, 4, 1, 1, RC_BLUE);
@@ -27,12 +30,15 @@ static Button buttonRotateZ(hexapod::MOVEMENT_ROTATEZ, "RotateZ", 2, 0, 1, 1, RC
 static Button buttonTwist(hexapod::MOVEMENT_TWIST, "Twist", 0, 1, 1, 1, RC_YELLOW);
 
 static ButtonGroup btnGroup;
+*/
+
 
 static void log_output(const char* log) {
   Serial.println(log);
 }
 
 void normal_setup(void) {
+  /*
   LRemote.setName("Hexapod");
   LRemote.setOrientation(RC_PORTRAIT);
   LRemote.setGrid(3, 5);
@@ -55,9 +61,11 @@ void normal_setup(void) {
   });
 
   LRemote.begin();
+  */
 }
 
 void normal_loop(void) {
+  /*
 
   // check if we are connect by some 
   // BLE central device, e.g. an mobile app
@@ -91,4 +99,6 @@ void normal_loop(void) {
   else {
     Serial.println(spent);
   }
+
+  */
 }

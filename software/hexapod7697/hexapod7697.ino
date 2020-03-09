@@ -1,5 +1,5 @@
 
-#include "src/setting_mode.h"
+//#include "src/setting_mode.h"
 #include "src/normal_mode.h"
 
 #include "src/hexapod/debug.h"
@@ -67,7 +67,7 @@ void setup() {
     normal_setup();
   }
   else if (_mode == 1) {
-    setting_setup();
+    // setting_setup();
   }
 
   Serial.print("Started, mode=");
@@ -79,6 +79,6 @@ void loop() {
     normal_loop();
   }
   else if (_mode == 1) {
-    setting_loop();
+    // setting_loop();
   }
 }
