@@ -4,7 +4,7 @@
 #include "debug.h"
 
 // TBD: move to hal
-#include <LFlash.h>
+// #include <LFlash.h>
 
 namespace hexapod {
 
@@ -21,8 +21,8 @@ namespace hexapod {
     void HexapodClass::init(bool setting) {
         Servo::init();
 
-        LFlash.begin();
-        calibrationLoad();
+        // LFlash.begin();
+        // calibrationLoad();
 
         // default to standby mode
         if (!setting)
@@ -43,6 +43,7 @@ namespace hexapod {
         }
     }
 
+    /*
     void HexapodClass::calibrationSave() {
 
         short data[6*3*2];
@@ -95,5 +96,6 @@ namespace hexapod {
             }
         }
     }
+    */
 
 }
