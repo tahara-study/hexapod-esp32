@@ -100,7 +100,9 @@ namespace hexapod {
         if (inverse_)
             angle = -angle;
 
-        int us = kServoMiddle + offset_ + angle*(kServoRange/60)*(1+0.01*scale_);
+        int us = kServoMiddle + angle*(kServoRange/60)*(1+0.01*0);
+        // int us = kServoMiddle + offset_ + angle*(kServoRange/60)*(1+0.01*scale_);
+
         if (us > kServoMax)
             us = kServoMax;
         else if(us < kServoMin)
