@@ -14,7 +14,7 @@
 #include "hexapod/hexapod.h"
 
 #define REACT_DELAY hexapod::config::movementInterval
-#define STANDBY_DELAY_CNT 50
+#define STANDBY_DELAY_CNT 70
 
 auto mode = hexapod::MOVEMENT_STANDBY;
 
