@@ -54,7 +54,7 @@ void setup() {
   pinMode(2, INPUT);
   pinMode(3, INPUT);
 
-  boot_wait();
+  // boot_wait();
 
   hexapod::initLogOutput(log_output, millis);
   hexapod::Hexapod.init(_mode == 1);
